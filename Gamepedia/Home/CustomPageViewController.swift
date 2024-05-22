@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomPageViewController: UIPageViewController {
+final class CustomPageViewController: UIPageViewController {
     
     init() {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -36,6 +36,7 @@ class CustomPageViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
+        delegate = self
         
         if let initialViewController = viewControllerAtIndex(0) {
             setViewControllers([initialViewController], direction: .forward, animated: true, completion: nil)
@@ -94,6 +95,11 @@ extension CustomPageViewController: UIPageViewControllerDataSource {
         
         return viewControllerAtIndex(index + 1)
     }
+    
+    
+}
+
+extension CustomPageViewController: UIPageViewControllerDelegate {
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed, let currentViewController = pageViewController.viewControllers?.first as? CustomPageDetailViewController,

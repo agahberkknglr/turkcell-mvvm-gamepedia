@@ -13,6 +13,7 @@
 		0886B8842BFCD69000D815AE /* APIURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8832BFCD69000D815AE /* APIURLs.swift */; };
 		0886B8942BFD507E00D815AE /* CustomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8932BFD507E00D815AE /* CustomPageViewController.swift */; };
 		0886B8962BFD511C00D815AE /* CustomPageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8952BFD511C00D815AE /* CustomPageDetailViewController.swift */; };
+		0886B8992BFE8FB200D815AE /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8982BFE8FB200D815AE /* HomeViewModel.swift */; };
 		08ABFE052BFBA6C40003B7BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABFE042BFBA6C40003B7BB /* AppDelegate.swift */; };
 		08ABFE072BFBA6C40003B7BB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABFE062BFBA6C40003B7BB /* SceneDelegate.swift */; };
 		08ABFE092BFBA6C40003B7BB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABFE082BFBA6C40003B7BB /* HomeViewController.swift */; };
@@ -48,6 +49,7 @@
 		0886B8832BFCD69000D815AE /* APIURLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURLs.swift; sourceTree = "<group>"; };
 		0886B8932BFD507E00D815AE /* CustomPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageViewController.swift; sourceTree = "<group>"; };
 		0886B8952BFD511C00D815AE /* CustomPageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageDetailViewController.swift; sourceTree = "<group>"; };
+		0886B8982BFE8FB200D815AE /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		08ABFE012BFBA6C40003B7BB /* Gamepedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gamepedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08ABFE042BFBA6C40003B7BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08ABFE062BFBA6C40003B7BB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +115,17 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		0886B8972BFE8F9600D815AE /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				0886B8952BFD511C00D815AE /* CustomPageDetailViewController.swift */,
+				0886B8932BFD507E00D815AE /* CustomPageViewController.swift */,
+				08ABFE082BFBA6C40003B7BB /* HomeViewController.swift */,
+				0886B8982BFE8FB200D815AE /* HomeViewModel.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		08ABFDF82BFBA6C40003B7BB = {
 			isa = PBXGroup;
 			children = (
@@ -136,14 +149,12 @@
 		08ABFE032BFBA6C40003B7BB /* Gamepedia */ = {
 			isa = PBXGroup;
 			children = (
+				0886B8972BFE8F9600D815AE /* Home */,
 				0886B8802BFCD27200D815AE /* Services */,
 				0886B87D2BFCCE9700D815AE /* Model */,
 				0886B87A2BFCCCF500D815AE /* Utilities */,
 				08ABFE042BFBA6C40003B7BB /* AppDelegate.swift */,
 				08ABFE062BFBA6C40003B7BB /* SceneDelegate.swift */,
-				08ABFE082BFBA6C40003B7BB /* HomeViewController.swift */,
-				0886B8932BFD507E00D815AE /* CustomPageViewController.swift */,
-				0886B8952BFD511C00D815AE /* CustomPageDetailViewController.swift */,
 				08ABFE102BFBA6C60003B7BB /* Assets.xcassets */,
 				08ABFE122BFBA6C60003B7BB /* LaunchScreen.storyboard */,
 				08ABFE152BFBA6C60003B7BB /* Info.plist */,
@@ -300,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08ABFE092BFBA6C40003B7BB /* HomeViewController.swift in Sources */,
+				0886B8992BFE8FB200D815AE /* HomeViewModel.swift in Sources */,
 				0886B8822BFCD29200D815AE /* GameService.swift in Sources */,
 				0886B8962BFD511C00D815AE /* CustomPageDetailViewController.swift in Sources */,
 				0886B87F2BFCCEAA00D815AE /* GameData.swift in Sources */,

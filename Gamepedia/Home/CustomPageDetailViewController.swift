@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomPageDetailViewController: UIViewController {
+final class CustomPageDetailViewController: UIViewController {
     
     var image: UIImage?
     
@@ -15,6 +15,7 @@ class CustomPageDetailViewController: UIViewController {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 10
         return imageView
     }()
     

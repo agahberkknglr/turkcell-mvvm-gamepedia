@@ -27,6 +27,8 @@ final class HomeViewController: UIViewController {
             pageViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -16),
             pageViewController.view.heightAnchor.constraint(equalToConstant: 200)
         ])
+        
+        
     }
     
 }
