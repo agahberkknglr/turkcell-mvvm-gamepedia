@@ -8,10 +8,11 @@
 import UIKit
 import SDWebImage
 
-protocol HomeViewControllerProtocol {
+protocol HomeViewControllerProtocol: AnyObject {
     func setupPageViewController()
     func setupCollectionView()
     func reloadCollectionView()
+    func loadImages(from urls: [String])
     
 }
 
@@ -20,76 +21,24 @@ final class HomeViewController: UIViewController {
     //MARK: - Variables
     private var collectionView: UICollectionView!
     var pageViewController: CustomPageViewController!
-    var games = [Game]()
-    var pageViewGames = [Game]()
-    let service = GameService()
+    private lazy var viewModel = HomeViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.view = self
+        viewModel.viewDidLoad()
         view.backgroundColor = UIColor(hex: "#1C212C")
-        initializePageViewController()
-        setupCollectionView()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchGame()
-    }
-    
-    func fetchGame() {
-        service.downloadGames { [weak self] result in
-            guard let self = self else { return }
-            guard let result = result else { return }
-            self.games = result
-            self.pageViewGames = Array(result.prefix(3))
-            self.updatePageViewControllerImages()
-            self.reloadCollectionView()
-        }
-    }
-    
-    private func initializePageViewController() {
-        pageViewController = CustomPageViewController()
-        setupPageViewController()
-    }
-    
-    private func updatePageViewControllerImages() {
-        let imageUrls = pageViewGames.compactMap { $0.backgroundImage }
-        loadImages(from: imageUrls) { [weak self] images in
-            DispatchQueue.main.async {
-                self?.pageViewController.images = images
-                self?.pageViewController.pageControl.numberOfPages = images.count
-                if let initialViewController = self?.pageViewController.viewControllerAtIndex(0) {
-                    self?.pageViewController.setViewControllers([initialViewController], direction: .forward, animated: true, completion: nil)
-                }
-            }
-        }
-    }
-    
-    private func loadImages(from urls: [String], completion: @escaping ([UIImage]) -> Void) {
-        var images = [UIImage]()
-        let dispatchGroup = DispatchGroup()
-        
-        for url in urls {
-            dispatchGroup.enter()
-            SDWebImageManager.shared.loadImage(
-                with: URL(string: url),
-                options: .highPriority,
-                progress: nil) { image, _, _, _, _, _ in
-                if let image = image {
-                    images.append(image)
-                }
-                dispatchGroup.leave()
-            }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            completion(images)
-        }
+        viewModel.viewWillAppear()
     }
 }
 
 extension HomeViewController: HomeViewControllerProtocol {
     
     func setupPageViewController() {
+        pageViewController = CustomPageViewController()
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
         pageViewController.didMove(toParent: self)
@@ -128,18 +77,37 @@ extension HomeViewController: HomeViewControllerProtocol {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
+    }
+    
+    func loadImages(from urls: [String]) {
+        let urlObjects = urls.compactMap { URL(string: $0) }
         
+        SDWebImagePrefetcher.shared.prefetchURLs(urlObjects) { [weak self] finishedCount, skippedCount in
+            guard let self = self else { return }
+            var images = [UIImage]()
+            for url in urlObjects {
+                if let image = SDImageCache.shared.imageFromCache(forKey: url.absoluteString) {
+                    images.append(image)
+                }
+            }
+            self.pageViewController.images = images
+            self.pageViewController.pageControl.numberOfPages = images.count
+            if let initialViewController = self.pageViewController.viewControllerAtIndex(0) {
+                self.pageViewController.setViewControllers([initialViewController], direction: .forward, animated: true, completion: nil)
+            }
+        }
     }
 }
 
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return max(0, games.count - 3)
+        return viewModel.numberOfItemsInSection()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GameCell.reuseIdentifier, for: indexPath) as! GameCell
-        cell.setCell(model: games[indexPath.item + 3])
+        let game = viewModel.cellforItem(at: indexPath)
+        cell.setCell(model: game)
         return cell
     }
 }
