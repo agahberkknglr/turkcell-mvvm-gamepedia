@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol HomeViewControllerProtocol {
     func setupPageViewController()
@@ -20,6 +21,7 @@ final class HomeViewController: UIViewController {
     private var collectionView: UICollectionView!
     var pageViewController: CustomPageViewController!
     var games = [Game]()
+    var pageViewGames = [Game]()
     let service = GameService()
     
     override func viewDidLoad() {
@@ -34,13 +36,13 @@ final class HomeViewController: UIViewController {
     }
     
     func fetchGame() {
-        service.downloadCoins { [weak self] result in
+        service.downloadGames { [weak self] result in
             guard let self = self else { return }
             guard let result = result else { return }
             self.games = result
-            print(result)
-            print("getgames")
-            reloadCollectionView()
+            self.pageViewGames = Array(result.prefix(3))
+            self.updatePageViewControllerImages()
+            self.reloadCollectionView()
         }
     }
     
@@ -49,6 +51,40 @@ final class HomeViewController: UIViewController {
         setupPageViewController()
     }
     
+    private func updatePageViewControllerImages() {
+        let imageUrls = pageViewGames.compactMap { $0.backgroundImage }
+        loadImages(from: imageUrls) { [weak self] images in
+            DispatchQueue.main.async {
+                self?.pageViewController.images = images
+                self?.pageViewController.pageControl.numberOfPages = images.count
+                if let initialViewController = self?.pageViewController.viewControllerAtIndex(0) {
+                    self?.pageViewController.setViewControllers([initialViewController], direction: .forward, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    private func loadImages(from urls: [String], completion: @escaping ([UIImage]) -> Void) {
+        var images = [UIImage]()
+        let dispatchGroup = DispatchGroup()
+        
+        for url in urls {
+            dispatchGroup.enter()
+            SDWebImageManager.shared.loadImage(
+                with: URL(string: url),
+                options: .highPriority,
+                progress: nil) { image, _, _, _, _, _ in
+                if let image = image {
+                    images.append(image)
+                }
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            completion(images)
+        }
+    }
 }
 
 extension HomeViewController: HomeViewControllerProtocol {
@@ -98,12 +134,12 @@ extension HomeViewController: HomeViewControllerProtocol {
 
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        games.count
+        return max(0, games.count - 3)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GameCell.reuseIdentifier, for: indexPath) as! GameCell
-        cell.setCell(model: games[indexPath.item])
+        cell.setCell(model: games[indexPath.item + 3])
         return cell
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 class GameService {
     
-    func downloadCoins(completion: @escaping ([Game]?) -> ()) {
+    func downloadGames(completion: @escaping ([Game]?) -> ()) {
         guard let url = URL(string: APIURLs.gamesURL) else { return }
         NetworkManager.shared.download(url: url) { [weak self] result in
             guard let self = self else { return }

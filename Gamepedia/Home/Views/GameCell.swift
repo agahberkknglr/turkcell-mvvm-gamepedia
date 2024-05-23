@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class GameCell: UICollectionViewCell {
     
@@ -20,7 +21,6 @@ final class GameCell: UICollectionViewCell {
     private var gameNameLabel = UILabel()
     private var gameDateLabel = UILabel()
     private var gameRatingLabel = UILabel()
-    private var dataTask: URLSessionDataTask?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,52 +31,19 @@ final class GameCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        gameImage.image = nil
-        cancelDownloading()
-    }
-    
     func setCell(model: Game){
         gameNameLabel.text = model.name
         gameDateLabel.text = model.released
         if let ratingDouble = model.rating {
             gameRatingLabel.text = String(ratingDouble)
         }
-        guard let stringURL = model.backgroundImage else { return }
-        downloadImage(imageURL: stringURL)
-        
-    }
-    
-    private func downloadImage(imageURL: String) {
-        
-        if let cachedImage = ImageCache.shared.object(forKey: imageURL as NSString) {
-            self.gameImage.image = cachedImage
-            return
+        if let gameUrl = model.backgroundImage {
+            if let url = URL(string: gameUrl) {
+                gameImage.sd_setImage(with: url)
+            }
         }
         
-        guard let url = URL(string: imageURL) else { return }
-        dataTask = NetworkManager.shared.download(url: url, completion: { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let data):
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.gameImage.image = image
-                        ImageCache.shared.setObject(image, forKey: imageURL as NSString)
-                    }
-                }
-            case .failure(_):
-                break
-            }
-        })
     }
-    private func cancelDownloading() {
-        dataTask?.cancel()
-        dataTask = nil
-    }
-    
     private func setupView() {
         contentView.addSubview(view)
         view.addSubview(cellStackView)

@@ -17,13 +17,19 @@ final class CustomPageViewController: UIPageViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var images: [UIImage] = [
-        UIImage(named: "image1")!,
-        UIImage(named: "image2")!,
-        UIImage(named: "image3")!,
-    ]
+    var images: [UIImage] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                if let initialViewController = self.viewControllerAtIndex(0) {
+                    self.setViewControllers([initialViewController], direction: .forward, animated: true, completion: nil)
+                    self.pageControl.numberOfPages = self.images.count
+                    self.pageControl.currentPage = 0
+                }
+            }
+        }
+    }
     
-    private lazy var pageControl: UIPageControl = {
+    lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         pageControl.currentPageIndicatorTintColor = UIColor.white
@@ -96,6 +102,9 @@ extension CustomPageViewController: UIPageViewControllerDataSource {
         return viewControllerAtIndex(index + 1)
     }
     
+    func updateImages(images: [UIImage]) {
+        self.images = images
+    }
     
 }
 
