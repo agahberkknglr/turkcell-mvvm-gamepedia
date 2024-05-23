@@ -26,7 +26,7 @@ final class CustomPageViewController: UIPageViewController {
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.currentPageIndicatorTintColor = UIColor.black
+        pageControl.currentPageIndicatorTintColor = UIColor.white
         pageControl.pageIndicatorTintColor = UIColor.lightGray
         pageControl.numberOfPages = images.count
         pageControl.currentPage = 0

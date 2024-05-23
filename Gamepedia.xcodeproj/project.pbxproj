@@ -14,6 +14,13 @@
 		0886B8942BFD507E00D815AE /* CustomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8932BFD507E00D815AE /* CustomPageViewController.swift */; };
 		0886B8962BFD511C00D815AE /* CustomPageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8952BFD511C00D815AE /* CustomPageDetailViewController.swift */; };
 		0886B8992BFE8FB200D815AE /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8982BFE8FB200D815AE /* HomeViewModel.swift */; };
+		0886B89C2BFE948100D815AE /* CGFLoat+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B89B2BFE948100D815AE /* CGFLoat+Ext.swift */; };
+		0886B89F2BFE954D00D815AE /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B89E2BFE954D00D815AE /* GameCell.swift */; };
+		0886B8A12BFE982200D815AE /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8A02BFE982200D815AE /* UIColor+Ext.swift */; };
+		0886B8A32BFE999600D815AE /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8A22BFE999600D815AE /* UIStackView+Ext.swift */; };
+		0886B8A52BFEE72700D815AE /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8A42BFEE72700D815AE /* UILabel+Ext.swift */; };
+		0886B8A72BFEE89300D815AE /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8A62BFEE89300D815AE /* UIView+Ext.swift */; };
+		0886B8AD2BFF288200D815AE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8AC2BFF288200D815AE /* ImageCache.swift */; };
 		08ABFE052BFBA6C40003B7BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABFE042BFBA6C40003B7BB /* AppDelegate.swift */; };
 		08ABFE072BFBA6C40003B7BB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABFE062BFBA6C40003B7BB /* SceneDelegate.swift */; };
 		08ABFE092BFBA6C40003B7BB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABFE082BFBA6C40003B7BB /* HomeViewController.swift */; };
@@ -50,6 +57,13 @@
 		0886B8932BFD507E00D815AE /* CustomPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageViewController.swift; sourceTree = "<group>"; };
 		0886B8952BFD511C00D815AE /* CustomPageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageDetailViewController.swift; sourceTree = "<group>"; };
 		0886B8982BFE8FB200D815AE /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		0886B89B2BFE948100D815AE /* CGFLoat+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFLoat+Ext.swift"; sourceTree = "<group>"; };
+		0886B89E2BFE954D00D815AE /* GameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
+		0886B8A02BFE982200D815AE /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		0886B8A22BFE999600D815AE /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
+		0886B8A42BFEE72700D815AE /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
+		0886B8A62BFEE89300D815AE /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		0886B8AC2BFF288200D815AE /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		08ABFE012BFBA6C40003B7BB /* Gamepedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gamepedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08ABFE042BFBA6C40003B7BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08ABFE062BFBA6C40003B7BB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				0886B87B2BFCCD0D00D815AE /* NetworkManager.swift */,
+				0886B8AC2BFF288200D815AE /* ImageCache.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -118,12 +133,33 @@
 		0886B8972BFE8F9600D815AE /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				0886B8952BFD511C00D815AE /* CustomPageDetailViewController.swift */,
-				0886B8932BFD507E00D815AE /* CustomPageViewController.swift */,
+				0886B89D2BFE953100D815AE /* Views */,
 				08ABFE082BFBA6C40003B7BB /* HomeViewController.swift */,
 				0886B8982BFE8FB200D815AE /* HomeViewModel.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		0886B89A2BFE946800D815AE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0886B89B2BFE948100D815AE /* CGFLoat+Ext.swift */,
+				0886B8A02BFE982200D815AE /* UIColor+Ext.swift */,
+				0886B8A22BFE999600D815AE /* UIStackView+Ext.swift */,
+				0886B8A42BFEE72700D815AE /* UILabel+Ext.swift */,
+				0886B8A62BFEE89300D815AE /* UIView+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0886B89D2BFE953100D815AE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0886B8952BFD511C00D815AE /* CustomPageDetailViewController.swift */,
+				0886B8932BFD507E00D815AE /* CustomPageViewController.swift */,
+				0886B89E2BFE954D00D815AE /* GameCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		08ABFDF82BFBA6C40003B7BB = {
@@ -149,6 +185,7 @@
 		08ABFE032BFBA6C40003B7BB /* Gamepedia */ = {
 			isa = PBXGroup;
 			children = (
+				0886B89A2BFE946800D815AE /* Extensions */,
 				0886B8972BFE8F9600D815AE /* Home */,
 				0886B8802BFCD27200D815AE /* Services */,
 				0886B87D2BFCCE9700D815AE /* Model */,
@@ -310,14 +347,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0886B8A72BFEE89300D815AE /* UIView+Ext.swift in Sources */,
 				08ABFE092BFBA6C40003B7BB /* HomeViewController.swift in Sources */,
 				0886B8992BFE8FB200D815AE /* HomeViewModel.swift in Sources */,
+				0886B89F2BFE954D00D815AE /* GameCell.swift in Sources */,
 				0886B8822BFCD29200D815AE /* GameService.swift in Sources */,
 				0886B8962BFD511C00D815AE /* CustomPageDetailViewController.swift in Sources */,
 				0886B87F2BFCCEAA00D815AE /* GameData.swift in Sources */,
+				0886B8A52BFEE72700D815AE /* UILabel+Ext.swift in Sources */,
+				0886B8A32BFE999600D815AE /* UIStackView+Ext.swift in Sources */,
 				08ABFE052BFBA6C40003B7BB /* AppDelegate.swift in Sources */,
+				0886B8A12BFE982200D815AE /* UIColor+Ext.swift in Sources */,
 				0886B8842BFCD69000D815AE /* APIURLs.swift in Sources */,
+				0886B8AD2BFF288200D815AE /* ImageCache.swift in Sources */,
 				0886B87C2BFCCD0D00D815AE /* NetworkManager.swift in Sources */,
+				0886B89C2BFE948100D815AE /* CGFLoat+Ext.swift in Sources */,
 				08ABFE072BFBA6C40003B7BB /* SceneDelegate.swift in Sources */,
 				08ABFE0F2BFBA6C40003B7BB /* Gamepedia.xcdatamodeld in Sources */,
 				0886B8942BFD507E00D815AE /* CustomPageViewController.swift in Sources */,
