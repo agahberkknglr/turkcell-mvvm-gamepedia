@@ -20,7 +20,8 @@ final class GameCell: UICollectionViewCell {
     private var gameImage = UIImageView()
     private var gameNameLabel = UILabel()
     private var gameDateLabel = UILabel()
-    private var gameRatingLabel = UILabel()
+    //private var gameRatingLabel = UILabel()
+    private let spininingCircleView = SpiningCircleView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,7 +36,11 @@ final class GameCell: UICollectionViewCell {
         gameNameLabel.text = model.name
         gameDateLabel.text = model.released
         if let ratingDouble = model.rating {
-            gameRatingLabel.text = String(ratingDouble)
+            spininingCircleView.ratingLabel.text = String(ratingDouble)
+            let ratingNormalized = CGFloat(ratingDouble / 5.0) 
+            spininingCircleView.spiningCircle.strokeEnd = ratingNormalized
+            spininingCircleView.spiningCircle.strokeStart = 0
+            
         }
         if let gameUrl = model.backgroundImage {
             if let url = URL(string: gameUrl) {
@@ -54,32 +59,37 @@ final class GameCell: UICollectionViewCell {
     }
     
     private func configureStacks() {
-        cellStackView.configure(axis: .horizontal, spacing: 5, views: [gameImage, nameStackView])
-        nameStackView.configure(axis: .vertical, spacing: 5, views: [gameNameLabel, dateStackView])
-        dateStackView.configure(axis: .horizontal, spacing: 5, views: [gameDateLabel, gameRatingLabel])
+        cellStackView.configure(axis: .horizontal, spacing: 16, views: [gameImage, nameStackView], alignment: .center)
+        nameStackView.configure(axis: .vertical, spacing: 16, views: [gameNameLabel, dateStackView], distribution: .equalSpacing)
+        dateStackView.configure(axis: .horizontal, spacing: 5, views: [gameDateLabel, spininingCircleView], distribution: .fill)
     }
     
     private func configureImage() {
+        gameImage.contentMode = .scaleAspectFit
         gameImage.layer.cornerRadius = 8
         gameImage.clipsToBounds = true
         
     }
     
     private func configureLabels() {
-        gameNameLabel.configure(color: .white, fontSize: 20, fontWeight: .semibold, textAlignment: .left)
-        gameDateLabel.configure(color: .gray, fontSize: 15, fontWeight: .light, textAlignment: .left)
-        gameRatingLabel.configure(color: .gray, fontSize: 15, fontWeight: .light, textAlignment: .right)
+        gameNameLabel.configure(color: .white, fontSize: 17, fontWeight: .semibold, textAlignment: .left)
+        gameDateLabel.configure(color: .gray, fontSize: 14, fontWeight: .light, textAlignment: .left)
+        spininingCircleView.ratingLabel.configure(color: .gray, fontSize: 14, fontWeight: .light, textAlignment: .center)
     }
     
     private func setupConstraints() {
         view.pin(view: contentView)
         cellStackView.pin(view: view)
         gameImage.translatesAutoresizingMaskIntoConstraints = false
+        spininingCircleView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            gameImage.widthAnchor.constraint(equalToConstant: 70),
-            gameImage.heightAnchor.constraint(equalTo: gameImage.widthAnchor, multiplier: 0.5)
+            gameImage.widthAnchor.constraint(equalToConstant: 100),
+            gameImage.heightAnchor.constraint(equalTo: gameImage.widthAnchor, multiplier: 0.5625),
+            spininingCircleView.widthAnchor.constraint(equalToConstant: 40),
+            spininingCircleView.heightAnchor.constraint(equalToConstant: 40),
+            
         ])
-        nameStackView.addConstraints(top: cellStackView.topAnchor, topConstant: 16, leading: gameImage.trailingAnchor, leadingConstant: 20, bottom: cellStackView.bottomAnchor, bottomConstant: -16, trailing: cellStackView.trailingAnchor, trailingConstant: -16)
+        nameStackView.addConstraints(top: cellStackView.topAnchor, topConstant: 8, leading: gameImage.trailingAnchor, leadingConstant: 20, bottom: cellStackView.bottomAnchor, bottomConstant: -16, trailing: cellStackView.trailingAnchor, trailingConstant: -16)
         dateStackView.addConstraints(top: gameNameLabel.bottomAnchor, topConstant: 8, leading: nameStackView.leadingAnchor, bottom: nameStackView.bottomAnchor, trailing: nameStackView.trailingAnchor)
     }
     

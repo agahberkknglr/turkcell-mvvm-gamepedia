@@ -119,7 +119,7 @@ extension HomeViewController: HomeViewControllerProtocol {
         let layout = UICollectionViewFlowLayout()
         let itemWidth = CGFloat.deviceWidth - 32
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: itemWidth, height: (itemWidth + 32) / 5)
+        layout.itemSize = CGSize(width: itemWidth, height: (itemWidth + 32) / 4)
         layout.minimumInteritemSpacing = 8
         return layout
     }

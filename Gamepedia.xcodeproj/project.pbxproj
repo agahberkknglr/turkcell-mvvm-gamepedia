@@ -22,6 +22,7 @@
 		0886B8A72BFEE89300D815AE /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8A62BFEE89300D815AE /* UIView+Ext.swift */; };
 		0886B8AD2BFF288200D815AE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8AC2BFF288200D815AE /* ImageCache.swift */; };
 		0886B8B12BFF324200D815AE /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0886B8B02BFF324200D815AE /* SDWebImage */; };
+		0886B8B32BFF3C9D00D815AE /* SpiningCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0886B8B22BFF3C9D00D815AE /* SpiningCircle.swift */; };
 		08ABFE052BFBA6C40003B7BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABFE042BFBA6C40003B7BB /* AppDelegate.swift */; };
 		08ABFE072BFBA6C40003B7BB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABFE062BFBA6C40003B7BB /* SceneDelegate.swift */; };
 		08ABFE092BFBA6C40003B7BB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABFE082BFBA6C40003B7BB /* HomeViewController.swift */; };
@@ -65,6 +66,7 @@
 		0886B8A42BFEE72700D815AE /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		0886B8A62BFEE89300D815AE /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		0886B8AC2BFF288200D815AE /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		0886B8B22BFF3C9D00D815AE /* SpiningCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiningCircle.swift; sourceTree = "<group>"; };
 		08ABFE012BFBA6C40003B7BB /* Gamepedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gamepedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08ABFE042BFBA6C40003B7BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08ABFE062BFBA6C40003B7BB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				0886B8952BFD511C00D815AE /* CustomPageDetailViewController.swift */,
 				0886B8932BFD507E00D815AE /* CustomPageViewController.swift */,
 				0886B89E2BFE954D00D815AE /* GameCell.swift */,
+				0886B8B22BFF3C9D00D815AE /* SpiningCircle.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				0886B89C2BFE948100D815AE /* CGFLoat+Ext.swift in Sources */,
 				08ABFE072BFBA6C40003B7BB /* SceneDelegate.swift in Sources */,
 				08ABFE0F2BFBA6C40003B7BB /* Gamepedia.xcdatamodeld in Sources */,
+				0886B8B32BFF3C9D00D815AE /* SpiningCircle.swift in Sources */,
 				0886B8942BFD507E00D815AE /* CustomPageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
