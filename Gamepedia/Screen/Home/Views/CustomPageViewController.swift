@@ -17,13 +17,11 @@ final class CustomPageViewController: UIPageViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var images: [UIImage] = [] {
+    var games = [Game]() {
         didSet {
             DispatchQueue.main.async {
                 if let initialViewController = self.viewControllerAtIndex(0) {
                     self.setViewControllers([initialViewController], direction: .forward, animated: true, completion: nil)
-                    self.pageControl.numberOfPages = self.images.count
-                    self.pageControl.currentPage = 0
                 }
             }
         }
@@ -34,7 +32,7 @@ final class CustomPageViewController: UIPageViewController {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         pageControl.currentPageIndicatorTintColor = UIColor.white
         pageControl.pageIndicatorTintColor = UIColor.lightGray
-        pageControl.numberOfPages = images.count
+        pageControl.numberOfPages = games.count
         pageControl.currentPage = 0
         return pageControl
     }()
@@ -58,18 +56,20 @@ final class CustomPageViewController: UIPageViewController {
     }
     
     func viewControllerAtIndex(_ index: Int) -> UIViewController? {
-        guard index >= 0 && index < images.count else {
+        guard index >= 0 && index < games.count else {
             return nil
         }
         
         let imageViewController = CustomPageDetailViewController()
-        imageViewController.image = images[index]
+        imageViewController.gameUrl = games[index].backgroundImage
+        imageViewController.id = games[index].id
         return imageViewController
     }
     
     @objc func pageControlValueChanged(_ sender: UIPageControl) {
+        _ = sender.currentPage
         if let currentViewController = viewControllers?.first as? CustomPageDetailViewController {
-            if let currentIndex = images.firstIndex(of: currentViewController.image!) {
+            if let currentIndex = games.firstIndex(where: { $0.id == currentViewController.id }) {
                 let newIndex = sender.currentPage
 
                 let direction: UIPageViewController.NavigationDirection = newIndex > currentIndex ? .forward : .reverse
@@ -82,28 +82,22 @@ final class CustomPageViewController: UIPageViewController {
 extension CustomPageViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let imageViewController = viewController as? CustomPageDetailViewController,
-              let image = imageViewController.image,
-              let index = images.firstIndex(of: image),
-              index > 0 else {
+              let currentIndex = games.firstIndex(where: { $0.id == imageViewController.id }),
+              currentIndex > 0 else {
             return nil
         }
         
-        return viewControllerAtIndex(index - 1)
+        return viewControllerAtIndex(currentIndex - 1)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let imageViewController = viewController as? CustomPageDetailViewController,
-              let image = imageViewController.image,
-              let index = images.firstIndex(of: image),
-              index < images.count - 1 else {
+              let currentIndex = games.firstIndex(where: { $0.id == imageViewController.id }),
+              currentIndex < games.count - 1 else  {
             return nil
         }
         
-        return viewControllerAtIndex(index + 1)
-    }
-    
-    func updateImages(images: [UIImage]) {
-        self.images = images
+        return viewControllerAtIndex(currentIndex + 1)
     }
     
 }
@@ -112,8 +106,11 @@ extension CustomPageViewController: UIPageViewControllerDelegate {
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed, let currentViewController = pageViewController.viewControllers?.first as? CustomPageDetailViewController,
-           let index = images.firstIndex(of: currentViewController.image!) {
-            pageControl.currentPage = index
+           let currentIndex = games.firstIndex(where: { $0.id == currentViewController.id }) {
+            pageControl.currentPage = currentIndex
         }
     }
 }
+
+
+

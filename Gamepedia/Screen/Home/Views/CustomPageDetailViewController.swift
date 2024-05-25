@@ -6,10 +6,17 @@
 //
 
 import UIKit
+import SDWebImage
+
+protocol CustomPageDetailViewControllerDelegate: AnyObject {
+    func didTapImage(withId id: Int)
+}
 
 final class CustomPageDetailViewController: UIViewController {
     
-    var image: UIImage?
+    var gameUrl: String?
+    var id: Int?
+    weak var delegate: CustomPageDetailViewControllerDelegate?
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -22,6 +29,12 @@ final class CustomPageDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupImageView()
+        loadImage()
+        addTapGestureToImageView()
+    }
+    
+    private func setupImageView() {
         view.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -30,9 +43,24 @@ final class CustomPageDetailViewController: UIViewController {
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
         ])
-        
-        if let image = image {
-            imageView.image = image
+    }
+    
+    private func loadImage() {
+        if let gameUrl = gameUrl, let url = URL(string: gameUrl) {
+            imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+        }
+    }
+    
+    private func addTapGestureToImageView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func imageTapped() {
+        if let id = id {
+            delegate?.didTapImage(withId: id)
         }
     }
 }
+

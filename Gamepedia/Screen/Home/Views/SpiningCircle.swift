@@ -67,3 +67,4 @@ class SpiningCircleView: UIView {
 
     }
 }
+

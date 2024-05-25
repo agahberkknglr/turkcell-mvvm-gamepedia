@@ -13,10 +13,12 @@ protocol HomeViewControllerProtocol: AnyObject {
     func setupPageViewController()
     func setupCollectionView()
     func reloadCollectionView()
-    func loadImages(from urls: [String])
+    func sendGames()
     func hidePageViewController()
     func showPageViewController()
-    
+    func navigateToDetailScreen(gameDetail: GameDetail)
+    func showEmptySearchView()
+    func hideEmptySearchView()
 }
 
 final class HomeViewController: UIViewController {
@@ -24,11 +26,11 @@ final class HomeViewController: UIViewController {
     //MARK: - Variables
     private var collectionView: UICollectionView!
     private var pageViewController: CustomPageViewController!
-    
     private var logoImageView: UIImageView!
     private var searchButton: UIButton!
     private var searchBar: UISearchBar!
-    private var stackView: UIStackView!
+    private var titleStackView: UIStackView!
+    private var emptySearchView: UIView!
     
     private lazy var viewModel = HomeViewModel()
     
@@ -38,8 +40,10 @@ final class HomeViewController: UIViewController {
         viewModel.viewDidLoad()
         view.backgroundColor = UIColor(hex: "#1C212C")
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
         viewModel.viewWillAppear()
     }
 }
@@ -66,24 +70,23 @@ extension HomeViewController: HomeViewControllerProtocol {
         searchBar.barTintColor = UIColor(hex: "#1C212C")
         searchBar.tintColor = .white
 
+        titleStackView = UIStackView(arrangedSubviews: [logoImageView, searchButton, searchBar])
+        titleStackView.axis = .horizontal
+        titleStackView.spacing = 32
+        titleStackView.alignment = .leading
+        titleStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        stackView = UIStackView(arrangedSubviews: [logoImageView, searchButton, searchBar])
-        stackView.axis = .horizontal
-        stackView.spacing = 32
-        stackView.alignment = .leading
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(stackView)
+        view.addSubview(titleStackView)
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            titleStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            titleStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            titleStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
             logoImageView.heightAnchor.constraint(equalToConstant: 50),
             logoImageView.widthAnchor.constraint(equalToConstant: 80),
-            logoImageView.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
-            logoImageView.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
+            logoImageView.centerXAnchor.constraint(equalTo: titleStackView.centerXAnchor),
+            logoImageView.centerYAnchor.constraint(equalTo: titleStackView.centerYAnchor),
             
             searchButton.heightAnchor.constraint(equalToConstant: 50),
             searchButton.widthAnchor.constraint(equalToConstant: 50)
@@ -112,7 +115,7 @@ extension HomeViewController: HomeViewControllerProtocol {
         pageViewController.view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 230)
         pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            pageViewController.view.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
+            pageViewController.view.topAnchor.constraint(equalTo: titleStackView.bottomAnchor, constant: 16),
             pageViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 16),
             pageViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -16),
             pageViewController.view.heightAnchor.constraint(equalToConstant: 200),
@@ -128,7 +131,23 @@ extension HomeViewController: HomeViewControllerProtocol {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = UIColor(hex: "#1C212C")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.addConstraints(top: pageViewController.view.bottomAnchor , topConstant: 16, leading: view.leadingAnchor, bottom: view.bottomAnchor,trailing: view.trailingAnchor)
+        
+        setupEmptyView()
+        
+        let stackView = UIStackView(arrangedSubviews: [pageViewController.view, collectionView, emptySearchView])
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(stackView)
+        
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: titleStackView.bottomAnchor, constant: 16),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
     }
     
     private func createFlowLayout() -> UICollectionViewFlowLayout {
@@ -146,19 +165,11 @@ extension HomeViewController: HomeViewControllerProtocol {
         }
     }
     
-    func loadImages(from urls: [String]) {
-        let urlObjects = urls.compactMap { URL(string: $0) }
-        
-        SDWebImagePrefetcher.shared.prefetchURLs(urlObjects) { [weak self] finishedCount, skippedCount in
-            guard let self = self else { return }
-            var images = [UIImage]()
-            for url in urlObjects {
-                if let image = SDImageCache.shared.imageFromCache(forKey: url.absoluteString) {
-                    images.append(image)
-                }
-            }
-            self.pageViewController.images = images
-            self.pageViewController.pageControl.numberOfPages = images.count
+    
+    func sendGames() {
+        DispatchQueue.main.async {
+            self.pageViewController.games = self.viewModel.gamesforPages()
+            self.pageViewController.pageControl.numberOfPages = self.viewModel.numberOfItemsInPageView()
             if let initialViewController = self.pageViewController.viewControllerAtIndex(0) {
                 self.pageViewController.setViewControllers([initialViewController], direction: .forward, animated: true, completion: nil)
             }
@@ -171,6 +182,42 @@ extension HomeViewController: HomeViewControllerProtocol {
     
     func showPageViewController() {
         pageViewController.view.isHidden = false
+    }
+    
+    func navigateToDetailScreen(gameDetail: GameDetail) {
+        DispatchQueue.main.async {
+            let detailViewController = DetailViewController(gameDetail: gameDetail)
+            self.navigationController?.pushViewController(detailViewController, animated: true)
+        }
+    }
+    
+    func showEmptySearchView() {
+        emptySearchView.isHidden = false
+    }
+    
+    func hideEmptySearchView() {
+        emptySearchView.isHidden = true
+    }
+    
+    private func setupEmptyView() {
+        emptySearchView = UIView()
+        emptySearchView.backgroundColor = .clear
+        emptySearchView.isHidden = true
+        
+        let emptyLabel = UILabel()
+        emptyLabel.text = "No results found!"
+        emptyLabel.textColor = .white
+        emptyLabel.textAlignment = .center
+        emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        emptySearchView.addSubview(emptyLabel)
+        
+        NSLayoutConstraint.activate([
+            emptyLabel.centerXAnchor.constraint(equalTo: emptySearchView.centerXAnchor),
+            emptyLabel.topAnchor.constraint(equalTo: emptySearchView.topAnchor, constant: -250),
+            emptyLabel.leadingAnchor.constraint(greaterThanOrEqualTo: emptySearchView.leadingAnchor),
+            emptyLabel.trailingAnchor.constraint(lessThanOrEqualTo: emptySearchView.trailingAnchor), 
+        ])
     }
 }
 
@@ -188,7 +235,9 @@ extension HomeViewController: UICollectionViewDataSource {
 }
 
 extension HomeViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.getDetail(id: viewModel.cellforItem(at: indexPath).id ?? 0)
+    }
 }
 
 extension HomeViewController: UISearchBarDelegate {
@@ -209,10 +258,8 @@ extension HomeViewController: UISearchBarDelegate {
         logoImageView.isHidden = false
         searchButton.isHidden = false
         searchBar.isHidden = true
-        viewModel.searchGames(with: "")
+        viewModel.searchGames(with: searchBar.text ?? "")
+        viewModel.isSearchingClosed()
     }
 }
-
-
-
 

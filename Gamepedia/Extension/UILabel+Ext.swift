@@ -8,8 +8,8 @@
 import UIKit
 
 extension UILabel {
-    func configure(color: UIColor, fontSize: CGFloat, fontWeight: UIFont.Weight, textAlignment: NSTextAlignment, text: String? = "") {
-        self.numberOfLines = 1
+    func configure(color: UIColor, fontSize: CGFloat, fontWeight: UIFont.Weight, textAlignment: NSTextAlignment, lineNumber: Int? = 1, text: String? = "") {
+        self.numberOfLines = lineNumber ?? 1
         self.textColor = color
         self.font = UIFont.systemFont(ofSize: fontSize, weight: fontWeight)
         self.textAlignment = textAlignment

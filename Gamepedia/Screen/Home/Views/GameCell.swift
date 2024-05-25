@@ -37,7 +37,7 @@ final class GameCell: UICollectionViewCell {
         gameDateLabel.text = model.released
         if let ratingDouble = model.rating {
             spininingCircleView.ratingLabel.text = String(ratingDouble)
-            let ratingNormalized = CGFloat(ratingDouble / 5.0) 
+            let ratingNormalized = CGFloat(ratingDouble / 5.0)
             spininingCircleView.spiningCircle.strokeEnd = ratingNormalized
             spininingCircleView.spiningCircle.strokeStart = 0
             
@@ -94,3 +94,4 @@ final class GameCell: UICollectionViewCell {
     }
     
 }
+
