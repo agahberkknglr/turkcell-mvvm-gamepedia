@@ -24,7 +24,9 @@ MVVM is a software architectural pattern used primarily in designing the structu
 - Model: Represents the data and business logic of the application. It retrieves data from databases or APIs and handles data operations.
 - View: Represents the UI layer of the application. It displays the data and sends user interactions to the ViewModel. The View is responsible for the presentation of the data.
 - ViewModel: Acts as a mediator between the View and the Model. It holds the data from the Model and prepares it for display in the View. The ViewModel also handles user commands and updates the Model accordingly.
+
 The MVVM pattern enhances testability, maintainability, and the separation of concerns, making the application more modular and easier to manage.
+
 ![image](https://github.com/agahberkknglr/turkcell-mvvm-gamepedia/assets/79965739/b5c9e608-81ec-459e-b284-ddf705340ae6)
 
  ## Screenshots
