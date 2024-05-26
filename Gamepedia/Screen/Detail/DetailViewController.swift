@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - Protocols
 protocol DetailViewControllerProtocol: AnyObject {
     func configureVC()
     func configureImage()
@@ -18,10 +19,9 @@ protocol DetailViewControllerProtocol: AnyObject {
 
 final class DetailViewController: UIViewController {
     
+    //MARK: - Variables
     private let gameDetail: GameDetail
-    
     private let viewModel = DetailViewModel()
-    
     private var scrollView: UIScrollView!
     private var contentView: UIView!
     private var customImage: CustomImageView!
@@ -31,6 +31,7 @@ final class DetailViewController: UIViewController {
     private var gameRatingLabel: UILabel!
     private var gameDescriptionLabel: UILabel!
     
+    //MARK: - Initialize
     init(gameDetail: GameDetail) {
         self.gameDetail = gameDetail
         super.init(nibName: nil, bundle: nil)
@@ -41,6 +42,7 @@ final class DetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.view = self
@@ -55,6 +57,7 @@ final class DetailViewController: UIViewController {
 
 extension DetailViewController: DetailViewControllerProtocol {
      
+    //MARK: - UI Setup
     func configureVC() {
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.barTintColor = .clear

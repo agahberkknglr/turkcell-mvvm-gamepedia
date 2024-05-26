@@ -10,13 +10,16 @@ import SDWebImage
 
 final class FavoriteCell: UICollectionViewCell {
     
+    //MARK: - Identifier
     static let reuseIdentifier = "FavoriteCell"
     
+    //MARK: - Variables
     private let view = UIView()
     private let stackView = UIStackView()
     private let gameImage = UIImageView()
     private let gameNameLabel = UILabel()
     
+    //MARK: - Initialize
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -26,6 +29,7 @@ final class FavoriteCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Setup Cell
     func setCell(model: GameDetail) {
         gameNameLabel.text = model.name
         if let gameUrl = model.backgroundImage {
@@ -35,6 +39,7 @@ final class FavoriteCell: UICollectionViewCell {
         }
     }
     
+    //MARK: - Setup UI
     private func setupView() {
         contentView.addSubview(view)
         view.addSubview(stackView)

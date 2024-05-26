@@ -9,14 +9,17 @@ import UIKit
 import SDWebImage
 
 protocol CustomPageDetailViewControllerDelegate: AnyObject {
-    func didTapImage(withId id: Int)
+    func didTapImage(game: Game)
 }
 
 final class CustomPageDetailViewController: UIViewController {
     
+    //MARK: - Variables
+    weak var delegate: CustomPageDetailViewControllerDelegate?
+    var game: Game?
     var gameUrl: String?
     var id: Int?
-    weak var delegate: CustomPageDetailViewControllerDelegate?
+
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -26,6 +29,7 @@ final class CustomPageDetailViewController: UIViewController {
         return imageView
     }()
     
+    //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,6 +38,7 @@ final class CustomPageDetailViewController: UIViewController {
         addTapGestureToImageView()
     }
     
+    //MARK: - Setup Image
     private func setupImageView() {
         view.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,9 +62,10 @@ final class CustomPageDetailViewController: UIViewController {
         imageView.addGestureRecognizer(tapGesture)
     }
     
+    //MARK: - Delegation
     @objc private func imageTapped() {
-        if let id = id {
-            delegate?.didTapImage(withId: id)
+        if let game = game {
+            delegate?.didTapImage(game: game)
         }
     }
 }

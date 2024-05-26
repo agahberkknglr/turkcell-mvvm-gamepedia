@@ -7,8 +7,13 @@
 
 import UIKit
 
-final class CustomPageViewController: UIPageViewController {
+protocol CustomPageViewControllerDelegate: AnyObject {
+    func didTapImage(game: Game)
+}
+
+class CustomPageViewController: UIPageViewController {
     
+    //MARK: - Initialize
     init() {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     }
@@ -17,6 +22,8 @@ final class CustomPageViewController: UIPageViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Variables
+    weak var customDelegate: CustomPageViewControllerDelegate?
     var games = [Game]() {
         didSet {
             DispatchQueue.main.async {
@@ -26,7 +33,6 @@ final class CustomPageViewController: UIPageViewController {
             }
         }
     }
-    
     lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
@@ -37,6 +43,7 @@ final class CustomPageViewController: UIPageViewController {
         return pageControl
     }()
 
+    //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
@@ -55,14 +62,17 @@ final class CustomPageViewController: UIPageViewController {
         ])
     }
     
+    //MARK: - Logic
     func viewControllerAtIndex(_ index: Int) -> UIViewController? {
         guard index >= 0 && index < games.count else {
             return nil
         }
-        
+        let game = games[index]
         let imageViewController = CustomPageDetailViewController()
         imageViewController.gameUrl = games[index].backgroundImage
         imageViewController.id = games[index].id
+        imageViewController.game = games[index]
+        imageViewController.delegate = self
         return imageViewController
     }
     
@@ -79,6 +89,7 @@ final class CustomPageViewController: UIPageViewController {
     }
 }
 
+//MARK: - UiPageViewControllerExtensions
 extension CustomPageViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let imageViewController = viewController as? CustomPageDetailViewController,
@@ -109,6 +120,13 @@ extension CustomPageViewController: UIPageViewControllerDelegate {
            let currentIndex = games.firstIndex(where: { $0.id == currentViewController.id }) {
             pageControl.currentPage = currentIndex
         }
+    }
+}
+
+//MARK: - Delegation
+extension CustomPageViewController: CustomPageDetailViewControllerDelegate {
+    func didTapImage(game: Game) {
+        customDelegate?.didTapImage(game: game)
     }
 }
 

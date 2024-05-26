@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - Protocols
 protocol HomeViewModelProtocol {
     var view: HomeViewControllerProtocol? { get set }
     func viewWillAppear()
@@ -21,6 +22,8 @@ protocol HomeViewModelProtocol {
 }
 
 final class HomeViewModel {
+    
+    //MARK: - Variables
     weak var view: HomeViewControllerProtocol?
     
     private var isSearching: Bool = false
@@ -48,6 +51,7 @@ final class HomeViewModel {
 
 extension HomeViewModel: HomeViewModelProtocol {
     
+    //MARK: - LifeCycles
     func viewDidLoad() {
         view?.setupTitle()
         view?.setupPageViewController()
@@ -58,6 +62,7 @@ extension HomeViewModel: HomeViewModelProtocol {
         fetchGame()
     }
     
+    //MARK: - Logics
     func numberOfItemsInSection() -> Int {
         if isSearching{
             return games.count
@@ -90,24 +95,11 @@ extension HomeViewModel: HomeViewModelProtocol {
     }
     
     func searchGames(with query: String) {
-        isSearching = true
-        if query.isEmpty || query.count < 3 {
-            games = allGames
-            view?.showPageViewController()
-        } else if query.count >= 3 {
-            games = allGames.filter { $0.name?.lowercased().contains(query.lowercased()) ?? false }
-            view?.hidePageViewController()
-        } else {
-            games = []
-        }
-        print(games.isEmpty)
-        if games.isEmpty {
-            view?.showEmptySearchView()
-        } else {
-            view?.hideEmptySearchView()
-        }
-        
+        isSearching = !query.isEmpty && query.count >= 3
+        games = isSearching ? allGames.filter { $0.name?.lowercased().contains(query.lowercased()) ?? false } : allGames
         view?.reloadCollectionView()
+        games.isEmpty ? view?.showEmptySearchView() : view?.hideEmptySearchView()
+        isSearching ? view?.hidePageViewController() : view?.showPageViewController()
     }
     
     func isSearchingClosed() {

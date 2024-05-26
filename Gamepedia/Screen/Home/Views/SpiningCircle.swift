@@ -9,13 +9,13 @@ import UIKit
 
 class SpiningCircleView: UIView {
     
+    //MARK: - Variables
     let containerView = UIView()
     let spiningCircle = CAShapeLayer()
     let ratingLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         configure()
         configureContainerView()
         configureLabel()
@@ -25,6 +25,7 @@ class SpiningCircleView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Setup
     private func configure() {
         let circleSize: CGFloat = 40
         let xPosition = (self.bounds.width ) / 2

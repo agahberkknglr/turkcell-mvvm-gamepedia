@@ -8,7 +8,9 @@
 import UIKit
 import SDWebImage
 
+//MARK: - Protocols
 protocol HomeViewControllerProtocol: AnyObject {
+    func setupVC()
     func setupTitle()
     func setupPageViewController()
     func setupCollectionView()
@@ -34,22 +36,26 @@ final class HomeViewController: UIViewController {
     
     private lazy var viewModel = HomeViewModel()
     
+    //MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.view = self
         viewModel.viewDidLoad()
-        view.backgroundColor = UIColor(hex: "#1C212C")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
         viewModel.viewWillAppear()
     }
 }
 
 extension HomeViewController: HomeViewControllerProtocol {
     
+    //MARK: - UISetup
+    func setupVC() {
+        navigationController?.navigationBar.isHidden = true
+        view.backgroundColor = UIColor(hex: "#1C212C")
+    }
     func setupTitle() {
         logoImageView = UIImageView(image: UIImage(named: "gamepedia-logo"))
         logoImageView.contentMode = .scaleAspectFit
@@ -109,6 +115,7 @@ extension HomeViewController: HomeViewControllerProtocol {
     
     func setupPageViewController() {
         pageViewController = CustomPageViewController()
+        pageViewController.customDelegate = self
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
         pageViewController.didMove(toParent: self)
@@ -165,7 +172,6 @@ extension HomeViewController: HomeViewControllerProtocol {
         }
     }
     
-    
     func sendGames() {
         DispatchQueue.main.async {
             self.pageViewController.games = self.viewModel.gamesforPages()
@@ -221,6 +227,7 @@ extension HomeViewController: HomeViewControllerProtocol {
     }
 }
 
+//MARK: - CollectionView Extensions
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numberOfItemsInSection()
@@ -240,6 +247,7 @@ extension HomeViewController: UICollectionViewDelegate {
     }
 }
 
+//MARK: - SearchBar Extension
 extension HomeViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count >= 3 || searchText.isEmpty {
@@ -263,3 +271,9 @@ extension HomeViewController: UISearchBarDelegate {
     }
 }
 
+//MARK: - UIPageViewControllerDelegation
+extension HomeViewController: CustomPageViewControllerDelegate {
+    func didTapImage(game: Game) {
+        viewModel.getDetail(id: game.id ?? 0)
+    }
+}

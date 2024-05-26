@@ -10,6 +10,7 @@ import SDWebImage
 
 final class GameCell: UICollectionViewCell {
     
+    //MARK: - Identifier
     static let reuseIdentifier = "GameCell"
     
     //MARK: - Variables
@@ -20,9 +21,9 @@ final class GameCell: UICollectionViewCell {
     private var gameImage = UIImageView()
     private var gameNameLabel = UILabel()
     private var gameDateLabel = UILabel()
-    //private var gameRatingLabel = UILabel()
     private let spininingCircleView = SpiningCircleView()
     
+    //MARK: - Initialize
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -32,6 +33,7 @@ final class GameCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Setup Cell
     func setCell(model: Game){
         gameNameLabel.text = model.name
         gameDateLabel.text = model.released
@@ -49,6 +51,8 @@ final class GameCell: UICollectionViewCell {
         }
         
     }
+    
+    //MARK: - Setup UI
     private func setupView() {
         contentView.addSubview(view)
         view.addSubview(cellStackView)

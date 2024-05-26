@@ -7,24 +7,30 @@
 
 import UIKit
 
+//MARK: - Protocols
 protocol FavoriteViewControllerProtocol: AnyObject {
+    func configUI()
     func configTitle()
     func configCollectionView()
     func reloadCollectionView()
     func navigateToDetailScreen(gameDetail: GameDetail)
+    func showEmptyView()
+    func hideEmptyView()
     
 }
 
 final class FavoriteViewController: UIViewController {
     
+    //MARK: - Variables
     private let viewModel = FavoriteViewModel()
     private var collectionView: UICollectionView!
     private var logoImageView: UIImageView!
+    private var emptyView: UIView!
     
+    //MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.view = self
-        view.backgroundColor = UIColor(hex: "#1C212C")
         viewModel.viewDidLoad()
         viewModel.load()
         configTitle()
@@ -32,15 +38,18 @@ final class FavoriteViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
         viewModel.viewWillAppear()
-        
     }
-
 }
 
 extension FavoriteViewController: FavoriteViewControllerProtocol {
     
+    //MARK: - UI Setup
+    func configUI() {
+        navigationController?.navigationBar.isHidden = true
+        view.backgroundColor = UIColor(hex: "#1C212C")
+    }
+
     func configTitle() {
         logoImageView = UIImageView(image: UIImage(named: "gamepedia-logo"))
         logoImageView.contentMode = .scaleAspectFit
@@ -65,13 +74,23 @@ extension FavoriteViewController: FavoriteViewControllerProtocol {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = UIColor(hex: "#1C212C")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 8),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
         
+        setupEmptyView()
+        
+        let stackView = UIStackView(arrangedSubviews: [ collectionView, emptyView])
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(stackView)
+        
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 16),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
     }
     
     private func createFlowLayout() -> UICollectionViewFlowLayout {
@@ -93,8 +112,38 @@ extension FavoriteViewController: FavoriteViewControllerProtocol {
             self.navigationController?.pushViewController(detailViewController, animated: true)
         }
     }
+    
+    func setupEmptyView() {
+        emptyView = UIView()
+        emptyView.backgroundColor = .clear
+        emptyView.isHidden = true
+        
+        let emptyLabel = UILabel()
+        emptyLabel.text = "You haven't liked any games!"
+        emptyLabel.textColor = .white
+        emptyLabel.textAlignment = .center
+        emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        emptyView.addSubview(emptyLabel)
+        
+        NSLayoutConstraint.activate([
+            emptyLabel.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor),
+            emptyLabel.topAnchor.constraint(equalTo: emptyView.topAnchor, constant: -300),
+            emptyLabel.leadingAnchor.constraint(greaterThanOrEqualTo: emptyView.leadingAnchor),
+            emptyLabel.trailingAnchor.constraint(lessThanOrEqualTo: emptyView.trailingAnchor),
+        ])
+    }
+    
+    func showEmptyView() {
+        emptyView.isHidden = false
+    }
+    
+    func hideEmptyView() {
+        emptyView.isHidden = true
+    }
 }
 
+//MARK: - CollectionView Extensions
 extension FavoriteViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numberOfItems()

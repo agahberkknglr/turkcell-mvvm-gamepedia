@@ -140,9 +140,9 @@
 		088492D72C017344005DD19E /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				08BD79982C0323C200773F62 /* View */,
 				088492D82C017358005DD19E /* DetailViewController.swift */,
 				088492DA2C017384005DD19E /* DetailViewModel.swift */,
-				08BD79892C02166D00773F62 /* CustomImageView.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -285,6 +285,14 @@
 			isa = PBXGroup;
 			children = (
 				08BD79922C03011E00773F62 /* FavoriteCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		08BD79982C0323C200773F62 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				08BD79892C02166D00773F62 /* CustomImageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
