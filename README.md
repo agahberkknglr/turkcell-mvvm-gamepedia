@@ -36,5 +36,5 @@ The MVVM pattern enhances testability, maintainability, and the separation of co
 ## Demo
 | Video 1                | Video 2                | 
 |------------------------|------------------------|
-| https://github.com/agahberkknglr/turkcell-mvvm-gamepedia/assets/79965739/bbda02d1-ab9e-4497-b5b3-aa640e4c905c | https://github.com/agahberkknglr/turkcell-mvvm-gamepedia/assets/79965739/c7b21586-5fc2-4fca-bb24-fb57e5b4ca34 |
+| ![video1_Clipchamp_ile_yapld_1-ezgif com-video-to-gif-converter](https://github.com/agahberkknglr/turkcell-mvvm-gamepedia/assets/79965739/4116a7b1-0b08-4c13-aba1-49b79377a316) | ![video1_Clipchamp_ile_yapld_2-ezgif com-video-to-gif-converter](https://github.com/agahberkknglr/turkcell-mvvm-gamepedia/assets/79965739/c5609e76-3856-4fa1-8ac0-570bb87c4f56) |
 
