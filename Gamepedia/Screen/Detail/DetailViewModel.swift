@@ -46,7 +46,7 @@ extension DetailViewModel: DetailViewModelProtocol {
     
     func saveGameToFavorites() {
         if let gameDetail = gameDetail {
-            CoreDataManager.shared.saveGame(id: gameDetail.id ?? 0)
+            CoreDataManager.shared.saveGame(id: gameDetail.id ?? 0,name: gameDetail.name ?? "", imageUrl: gameDetail.backgroundImage ?? "")
         }
     }
     

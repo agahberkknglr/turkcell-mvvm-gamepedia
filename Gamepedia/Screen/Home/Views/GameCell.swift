@@ -73,8 +73,8 @@ final class GameCell: UICollectionViewCell {
     
     private func configureLabels() {
         gameNameLabel.configure(color: .white, fontSize: 17, fontWeight: .semibold, textAlignment: .left)
-        gameDateLabel.configure(color: .gray, fontSize: 14, fontWeight: .light, textAlignment: .left)
-        spininingCircleView.ratingLabel.configure(color: .gray, fontSize: 14, fontWeight: .light, textAlignment: .center)
+        gameDateLabel.configure(color: .lightGray, fontSize: 14, fontWeight: .medium, textAlignment: .left)
+        spininingCircleView.ratingLabel.configure(color: .lightGray, fontSize: 14, fontWeight: .medium, textAlignment: .center)
     }
     
     private func setupConstraints() {

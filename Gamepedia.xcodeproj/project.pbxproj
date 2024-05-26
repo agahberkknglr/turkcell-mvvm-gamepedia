@@ -40,6 +40,7 @@
 		08ABFE2B2BFBA6C60003B7BB /* GamepediaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABFE2A2BFBA6C60003B7BB /* GamepediaUITestsLaunchTests.swift */; };
 		08BD798A2C02166D00773F62 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BD79892C02166D00773F62 /* CustomImageView.swift */; };
 		08BD79902C02E51100773F62 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BD798F2C02E51100773F62 /* CoreDataManager.swift */; };
+		08BD79932C03011E00773F62 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BD79922C03011E00773F62 /* FavoriteCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		08ABFE2A2BFBA6C60003B7BB /* GamepediaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamepediaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		08BD79892C02166D00773F62 /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		08BD798F2C02E51100773F62 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		08BD79922C03011E00773F62 /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 		088492DE2C01E935005DD19E /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
+				08BD79912C0300F600773F62 /* View */,
 				088492DF2C01E946005DD19E /* FavoriteViewController.swift */,
 				088492E12C01E955005DD19E /* FavoriteViewModel.swift */,
 			);
@@ -276,6 +279,14 @@
 				08ABFE2A2BFBA6C60003B7BB /* GamepediaUITestsLaunchTests.swift */,
 			);
 			path = GamepediaUITests;
+			sourceTree = "<group>";
+		};
+		08BD79912C0300F600773F62 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				08BD79922C03011E00773F62 /* FavoriteCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -423,6 +434,7 @@
 				08BD79902C02E51100773F62 /* CoreDataManager.swift in Sources */,
 				0886B8822BFCD29200D815AE /* GameService.swift in Sources */,
 				088492E22C01E955005DD19E /* FavoriteViewModel.swift in Sources */,
+				08BD79932C03011E00773F62 /* FavoriteCell.swift in Sources */,
 				0886B8962BFD511C00D815AE /* CustomPageDetailViewController.swift in Sources */,
 				0886B87F2BFCCEAA00D815AE /* GameData.swift in Sources */,
 				088492D92C017358005DD19E /* DetailViewController.swift in Sources */,

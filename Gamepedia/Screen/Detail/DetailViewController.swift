@@ -64,6 +64,7 @@ extension DetailViewController: DetailViewControllerProtocol {
     func configureImage() {
         customImage = CustomImageView(frame: .zero)
         customImage.loadImage(gameUrl: gameDetail.backgroundImage)
+        customImage.contentMode = .scaleAspectFit
         contentView.addSubview(customImage)
         
         customImage.translatesAutoresizingMaskIntoConstraints = false
@@ -113,8 +114,8 @@ extension DetailViewController: DetailViewControllerProtocol {
         gameDescriptionLabel = UILabel()
         
         gameTitleLabel.configure(color: .white, fontSize: 22, fontWeight: .semibold, textAlignment: .left, text: gameDetail.name)
-        gameDateLabel.configure(color: .gray, fontSize: 14, fontWeight: .light, textAlignment: .left, text: gameDetail.released)
-        gameRatingLabel.configure(color: .gray, fontSize: 14, fontWeight: .light, textAlignment: .left, text: "Metacritic Score: " + String(gameDetail.metacritic ?? 0))
+        gameDateLabel.configure(color: .lightGray, fontSize: 14, fontWeight: .medium, textAlignment: .left, text: gameDetail.released)
+        gameRatingLabel.configure(color: .lightGray, fontSize: 14, fontWeight: .medium, textAlignment: .left, text: "Metacritic Score: " + String(gameDetail.metacritic ?? 0))
         gameDescriptionLabel.configure(color: .white, fontSize: 17, fontWeight: .medium, textAlignment: .natural ,lineNumber: 0, text: gameDetail.descriptionRaw)
         
         

@@ -40,12 +40,13 @@ final class CoreDataManager {
         }
     }
     
-    func saveGame(id: Int) {
+    func saveGame(id: Int, name: String, imageUrl: String) {
         let favoriteGame = FavoriteGame(context: context)
         favoriteGame.id = String(id)
+        favoriteGame.name = name
+        favoriteGame.imageURL = imageUrl
         
         saveContext()
-        
     }
     
     func removeGame(id: Int) {
@@ -76,11 +77,17 @@ final class CoreDataManager {
         }
     }
     
-    func fetchFavoriteGames() -> [FavoriteGame] {
+    func fetchFavoriteGames() -> [GameDetail] {
         let fetchRequest: NSFetchRequest<FavoriteGame> = FavoriteGame.fetchRequest()
         
         do {
-            return try context.fetch(fetchRequest)
+            let favoriteGames = try context.fetch(fetchRequest)
+            return favoriteGames.compactMap { favoriteGame in
+                if let idString = favoriteGame.id, let id = Int(idString), let name = favoriteGame.name, let imageURL = favoriteGame.imageURL {
+                    return GameDetail(id: id, metacritic: nil, name: name, descriptionRaw: nil, released: nil, website: nil, backgroundImage: imageURL)
+                }
+                return nil
+            }
         } catch {
             print("Failed to fetch favorite games: \(error)")
             return []

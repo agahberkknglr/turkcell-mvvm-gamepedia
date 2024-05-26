@@ -205,7 +205,7 @@ extension HomeViewController: HomeViewControllerProtocol {
         emptySearchView.isHidden = true
         
         let emptyLabel = UILabel()
-        emptyLabel.text = "No results found!"
+        emptyLabel.text = "Sorry, no results found!"
         emptyLabel.textColor = .white
         emptyLabel.textAlignment = .center
         emptyLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -214,7 +214,7 @@ extension HomeViewController: HomeViewControllerProtocol {
         
         NSLayoutConstraint.activate([
             emptyLabel.centerXAnchor.constraint(equalTo: emptySearchView.centerXAnchor),
-            emptyLabel.topAnchor.constraint(equalTo: emptySearchView.topAnchor, constant: -250),
+            emptyLabel.topAnchor.constraint(equalTo: emptySearchView.topAnchor, constant: -300),
             emptyLabel.leadingAnchor.constraint(greaterThanOrEqualTo: emptySearchView.leadingAnchor),
             emptyLabel.trailingAnchor.constraint(lessThanOrEqualTo: emptySearchView.trailingAnchor), 
         ])
