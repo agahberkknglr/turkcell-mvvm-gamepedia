@@ -59,6 +59,7 @@ extension HomeViewModel: HomeViewModelProtocol {
     }
     
     func viewWillAppear() {
+        view?.setupVC()
         fetchGame()
     }
     

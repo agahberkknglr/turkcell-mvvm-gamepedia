@@ -41,10 +41,10 @@ extension FavoriteViewModel: FavoriteViewModelProtocol{
     func viewWillAppear() {
         fetchFavoriteGames()
         emptyViewVisibility()
+        view?.configUI()
     }
     
     func viewDidLoad() {
-        view?.configUI()
         view?.configTitle()
         view?.configCollectionView()
         view?.reloadCollectionView()
