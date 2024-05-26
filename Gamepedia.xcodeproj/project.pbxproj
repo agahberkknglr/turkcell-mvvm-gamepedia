@@ -39,6 +39,7 @@
 		08ABFE292BFBA6C60003B7BB /* GamepediaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABFE282BFBA6C60003B7BB /* GamepediaUITests.swift */; };
 		08ABFE2B2BFBA6C60003B7BB /* GamepediaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ABFE2A2BFBA6C60003B7BB /* GamepediaUITestsLaunchTests.swift */; };
 		08BD798A2C02166D00773F62 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BD79892C02166D00773F62 /* CustomImageView.swift */; };
+		08BD79902C02E51100773F62 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BD798F2C02E51100773F62 /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 		08ABFE282BFBA6C60003B7BB /* GamepediaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamepediaUITests.swift; sourceTree = "<group>"; };
 		08ABFE2A2BFBA6C60003B7BB /* GamepediaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamepediaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		08BD79892C02166D00773F62 /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
+		08BD798F2C02E51100773F62 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 			children = (
 				0886B87B2BFCCD0D00D815AE /* NetworkManager.swift */,
 				0886B8AC2BFF288200D815AE /* ImageCache.swift */,
+				08BD798F2C02E51100773F62 /* CoreDataManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -245,8 +248,8 @@
 			children = (
 				0886B89A2BFE946800D815AE /* Extension */,
 				088492D62C0172E5005DD19E /* Screen */,
-				0886B8802BFCD27200D815AE /* Services */,
 				0886B87D2BFCCE9700D815AE /* Model */,
+				0886B8802BFCD27200D815AE /* Services */,
 				0886B87A2BFCCCF500D815AE /* Utilities */,
 				08ABFE042BFBA6C40003B7BB /* AppDelegate.swift */,
 				08ABFE062BFBA6C40003B7BB /* SceneDelegate.swift */,
@@ -417,6 +420,7 @@
 				088492E42C01EC46005DD19E /* TabbarViewController.swift in Sources */,
 				0886B8992BFE8FB200D815AE /* HomeViewModel.swift in Sources */,
 				0886B89F2BFE954D00D815AE /* GameCell.swift in Sources */,
+				08BD79902C02E51100773F62 /* CoreDataManager.swift in Sources */,
 				0886B8822BFCD29200D815AE /* GameService.swift in Sources */,
 				088492E22C01E955005DD19E /* FavoriteViewModel.swift in Sources */,
 				0886B8962BFD511C00D815AE /* CustomPageDetailViewController.swift in Sources */,

@@ -22,8 +22,6 @@ final class DetailViewController: UIViewController {
     
     private let viewModel = DetailViewModel()
     
-    
-    
     private var scrollView: UIScrollView!
     private var contentView: UIView!
     private var customImage: CustomImageView!
@@ -36,6 +34,7 @@ final class DetailViewController: UIViewController {
     init(gameDetail: GameDetail) {
         self.gameDetail = gameDetail
         super.init(nibName: nil, bundle: nil)
+        viewModel.configure(with: gameDetail)
     }
     
     required init?(coder: NSCoder) {
@@ -95,9 +94,17 @@ extension DetailViewController: DetailViewControllerProtocol {
     
     @objc private func favButtonTapped() {
         customFavButton.isSelected.toggle()
+        if customFavButton.isSelected {
+            viewModel.saveGameToFavorites()
+        } else {
+            viewModel.removeGameFromFavorites()
+        }
         print("Favorite button tapped")
     }
     
+    func updateFavButtonState(isFavorite: Bool) {
+        customFavButton.isSelected = isFavorite
+    }
     
     func configureLabels() {
         gameTitleLabel = UILabel()

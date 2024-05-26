@@ -6,7 +6,16 @@
 //
 
 import Foundation
+import CoreData
+
+protocol FavoriteViewModelProtocol {
+    
+}
 
 final class FavoriteViewModel {
+
+}
+
+extension FavoriteViewModelProtocol {
     
 }

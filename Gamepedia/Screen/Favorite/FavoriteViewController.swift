@@ -7,12 +7,21 @@
 
 import UIKit
 
-class FavoriteViewController: UIViewController {
+protocol FavoriteViewControllerProtocol: AnyObject {
+    
+}
+
+final class FavoriteViewController: UIViewController {
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = .systemCyan
     }
 
+}
+
+extension FavoriteViewController: FavoriteViewControllerProtocol {
+    
 }
