@@ -33,7 +33,7 @@ The MVVM pattern enhances testability, maintainability, and the separation of co
 | ![Simulator Screenshot - iPhone SE (3rd generation) - 2024-05-26 at 13 34 49](https://github.com/agahberkknglr/turkcell-mvvm-gamepedia/assets/79965739/cf8abd82-ef42-41fb-8abe-60b9d45cf5c8) | ![Simulator Screenshot - iPhone SE (3rd generation) - 2024-05-26 at 13 35 11](https://github.com/agahberkknglr/turkcell-mvvm-gamepedia/assets/79965739/3f9b136c-1c7a-4da4-ae08-554d99a42c52) | ![Simulator Screenshot - iPhone SE (3rd generation) - 2024-05-26 at 13 35 19](https://github.com/agahberkknglr/turkcell-mvvm-gamepedia/assets/79965739/d6e3fe91-ef9e-4d6d-86d5-ba24f2912bb7) |
 | Home Page | Detail Page | Favorite Page |
 
-##Demo
+## Demo
 | Video 1                | Video 2                | 
 |------------------------|------------------------|
 | https://github.com/agahberkknglr/turkcell-mvvm-gamepedia/assets/79965739/bbda02d1-ab9e-4497-b5b3-aa640e4c905c | https://github.com/agahberkknglr/turkcell-mvvm-gamepedia/assets/79965739/c7b21586-5fc2-4fca-bb24-fb57e5b4ca34 |
